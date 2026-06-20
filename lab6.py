@@ -1,0 +1,28 @@
+import pandas as pd
+
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import accuracy_score
+
+df = pd.read_csv("Titanic.csv")
+
+df = df[['Survived','Pclass','Age','Fare']]
+
+df['Age'].fillna(df['Age'].mean(), inplace=True)
+
+X = df.drop('Survived', axis=1)
+y = df['Survived']
+
+X_train,X_test,y_train,y_test = train_test_split(
+    X,y,
+    test_size=0.2,
+    random_state=42
+)
+
+model = GaussianNB()
+
+model.fit(X_train,y_train)
+
+y_pred = model.predict(X_test)
+
+print("Accuracy =", accuracy_score(y_test,y_pred))

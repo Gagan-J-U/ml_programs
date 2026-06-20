@@ -1,34 +1,42 @@
-import random
+from queue import PriorityQueue
 
-# Objective Function
-def objective(x):
-    return -(x * x) + 10
+graph = {
+    'A':[('B',1),('C',3)],
+    'B':[('D',3),('E',5)],
+    'C':[('F',2)],
+    'D':[],
+    'E':[],
+    'F':[]
+}
 
-# Hill Climbing Function
-def hill_climbing(start):
-    current = start
+heuristic = {
+    'A':6,
+    'B':4,
+    'C':2,
+    'D':1,
+    'E':1,
+    'F':0
+}
 
-    while True:
-        left = current - 1
-        right = current + 1
+pq = PriorityQueue()
 
-        current_value = objective(current)
+pq.put((0,'A'))
 
-        # Choose the better neighbor
-        if objective(left) > current_value:
-            current = left
-        elif objective(right) > current_value:
-            current = right
-        else:
-            break
+cost = {'A':0}
 
-    return current, objective(current)
+while not pq.empty():
 
-# Random Starting Point
-start = random.randint(-10, 10)
+    f,current = pq.get()
 
-solution, value = hill_climbing(start)
+    if current == 'F':
+        print("Goal Reached")
+        break
 
-print("Starting Point :", start)
-print("Optimal Solution :", solution)
-print("Optimal Value :", value)
+    for neighbor,weight in graph[current]:
+
+        g = cost[current] + weight
+
+        if neighbor not in cost or g < cost[neighbor]:
+
+            cost[neighbor] = g
+            pq.put((g + heuristic[neighbor],neighbor))
