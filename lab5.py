@@ -11,8 +11,7 @@ def alphabeta(depth,node,maxPlayer,
         for i in range(2):
 
             val = alphabeta(depth+1,node*2+i,False,values,alpha,beta,height)
-
-
+            
             best = max(best,val)
             alpha = max(alpha,best)
 

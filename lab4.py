@@ -1,3 +1,5 @@
+#min max
+
 def minimax(depth,node,maxPlayer,values,height):
 
     if depth == height:

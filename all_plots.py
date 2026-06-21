@@ -2,61 +2,81 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.datasets import load_iris
 
-# Load Iris Dataset
-data = load_iris()
+# Load Dataset
+df = pd.read_csv("ToyotaCorolla.csv")
 
-df = pd.DataFrame(
-    data.data,
-    columns=data.feature_names
-)
+print(df.head())
 
 # --------------------
 # Scatter Plot
 # --------------------
-plt.figure(figsize=(6,4))
-plt.scatter(df.iloc[:,0], df.iloc[:,1])
-plt.title("Scatter Plot")
+plt.scatter(df["Price"], df["KM"])
+plt.title("Price vs KM")
+plt.xlabel("Price")
+plt.ylabel("KM")
 plt.show()
 
 # --------------------
-# 3D Surface Plot
+# Simple 3D Plot
 # --------------------
-x = np.arange(len(df))
-y = np.arange(len(df.columns))
-
-X, Y = np.meshgrid(x, y)
-Z = np.array([df[col] for col in df.columns])
-
-fig = plt.figure(figsize=(8,5))
+fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 
-ax.plot_surface(X, Y, Z)
+ax.scatter(
+    df["Age"],
+    df["KM"],
+    df["Price"]
+)
 
-plt.title("3D Surface Plot")
+ax.set_xlabel("Age")
+ax.set_ylabel("KM")
+ax.set_zlabel("Price")
+
+plt.title("3D Plot")
 plt.show()
 
 # --------------------
 # Contour Plot
 # --------------------
-plt.figure(figsize=(6,4))
-plt.contour(df)
+plt.contour(
+    np.array([
+        df["Price"][:50],
+        df["KM"][:50]
+    ])
+)
+
 plt.title("Contour Plot")
 plt.show()
 
 # --------------------
 # Heat Map
 # --------------------
-plt.figure(figsize=(6,4))
-sns.heatmap(df)
+sns.heatmap(
+    df[["Price", "Age", "KM", "HP", "Weight"]]
+        .corr(),
+    annot=True
+)
+
 plt.title("Heat Map")
 plt.show()
 
 # --------------------
 # Box Plot
 # --------------------
-plt.figure(figsize=(6,4))
-plt.boxplot(df)
+plt.boxplot(
+    [
+        df["Price"],
+        df["KM"],
+        df["HP"],
+        df["Weight"]
+    ]
+)
+
+plt.xticks(
+    [1, 2, 3, 4],
+    ["Price", "KM", "HP", "Weight"]
+)
+
 plt.title("Box Plot")
 plt.show()

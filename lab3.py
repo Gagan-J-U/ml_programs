@@ -1,3 +1,5 @@
+#a*
+
 from queue import PriorityQueue
 
 graph = {
