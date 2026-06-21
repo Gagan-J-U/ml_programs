@@ -8,7 +8,7 @@ df = pd.read_csv("Titanic.csv")
 
 df = df[['Survived','Pclass','Age','Fare']]
 
-df['Age'].fillna(df['Age'].mean(), inplace=True)
+df['Age']=df['Age'].fillna(df['Age'].mean())
 
 X = df.drop('Survived', axis=1)
 y = df['Survived']
