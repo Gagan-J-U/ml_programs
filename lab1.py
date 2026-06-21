@@ -1,3 +1,5 @@
+# Hill Climbing Algorithm Implementation in Python
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -8,26 +10,36 @@ current = 0
 
 while True:
 
-    neighbour = current + 1
+    left = current - 1
+    right = current + 1
 
-    if objective(neighbour) > objective(current):
-        current = neighbour
+    best = current
 
-    else:
+    if objective(left) > objective(best):
+        best = left
+
+    if objective(right) > objective(best):
+        best = right
+
+    if best == current:
         break
+
+    current = best
 
 print("Optimal Solution =", current)
 print("Maximum Value =", objective(current))
 
 # Graph
-x = np.arange(0,11,1)
+x = np.arange(0,10,0.1)
 y = [objective(i) for i in x]
 
 plt.plot(x,y)
-
+plt.scatter(x,y, color='black',s=1 )
 plt.scatter(
     current,
     objective(current),
+    marker='x',
+    color='red',
     s=100
 )
 
