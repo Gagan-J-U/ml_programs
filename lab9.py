@@ -2,8 +2,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from sklearn.datasets import load_iris
-from sklearn.cluster import AgglomerativeClustering
+from scipy.cluster.hierarchy import dendrogram, linkage
 
+# Load Iris Dataset
 data = load_iris()
 
 df = pd.DataFrame(
@@ -11,42 +12,36 @@ df = pd.DataFrame(
     columns=data.feature_names
 )
 
-# Single Linkage
-single = AgglomerativeClustering(
-    n_clusters=3,
-    linkage='single'
+# --------------------
+# Single Linkage Dendrogram
+# --------------------
+
+single = linkage(
+    df,
+    method='single'
 )
 
-single_labels = single.fit_predict(df)
+plt.figure()
+dendrogram(single)
 
-print("Single Linkage")
-print(single_labels)
-
-plt.scatter(
-    df.iloc[:,0],
-    df.iloc[:,1],
-    c=single_labels
-)
-
-plt.title("Agglomerative - Single Linkage")
+plt.title("Single Linkage Dendrogram")
+plt.xlabel("Samples")
+plt.ylabel("Distance")
 plt.show()
 
-# Complete Linkage
-complete = AgglomerativeClustering(
-    n_clusters=3,
-    linkage='complete'
+# --------------------
+# Complete Linkage Dendrogram
+# --------------------
+
+complete = linkage(
+    df,
+    method='complete'
 )
 
-complete_labels = complete.fit_predict(df)
+plt.figure()
+dendrogram(complete)
 
-print("\nComplete Linkage")
-print(complete_labels)
-
-plt.scatter(
-    df.iloc[:,0],
-    df.iloc[:,1],
-    c=complete_labels
-)
-
-plt.title("Agglomerative - Complete Linkage")
+plt.title("Complete Linkage Dendrogram")
+plt.xlabel("Samples")
+plt.ylabel("Distance")
 plt.show()

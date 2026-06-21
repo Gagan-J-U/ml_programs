@@ -1,5 +1,3 @@
-#a*
-
 from queue import PriorityQueue
 
 graph = {
@@ -25,13 +23,28 @@ pq = PriorityQueue()
 pq.put((0,'A'))
 
 cost = {'A':0}
+parent = {'A':None}
 
 while not pq.empty():
 
     f,current = pq.get()
 
     if current == 'F':
+
+        path = []
+
+        node = current
+
+        while node is not None:
+            path.append(node)
+            node = parent[node]
+
+        path.reverse()
+
         print("Goal Reached")
+        print("Path =", " -> ".join(path))
+        print("Cost =", cost[current])
+
         break
 
     for neighbor,weight in graph[current]:
@@ -41,4 +54,11 @@ while not pq.empty():
         if neighbor not in cost or g < cost[neighbor]:
 
             cost[neighbor] = g
-            pq.put((g + heuristic[neighbor],neighbor))
+            parent[neighbor] = current
+
+            pq.put(
+                (
+                    g + heuristic[neighbor],
+                    neighbor
+                )
+            )
