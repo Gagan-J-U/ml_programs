@@ -23,7 +23,7 @@ plt.show()
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 
-ax.scatter(
+ax.plot_trisurf(
     df["Age"],
     df["KM"],
     df["Price"]
@@ -39,12 +39,7 @@ plt.show()
 # --------------------
 # Contour Plot
 # --------------------
-plt.contour(
-    np.array([
-        df["Price"][:50],
-        df["KM"][:50]
-    ])
-)
+plt.tricontour(df["KM"],df["Weight"],df["Price"])
 
 plt.title("Contour Plot")
 plt.show()

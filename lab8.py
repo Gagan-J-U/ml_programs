@@ -17,7 +17,6 @@ model = KMeans(
 )
 
 model.fit(df)
-
 labels = model.labels_
 centers = model.cluster_centers_
 

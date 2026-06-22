@@ -1,15 +1,16 @@
-import numpy as np
-from queue import PriorityQueue
+import matplotlib.pyplot as plt
+import sklearn
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score,confusion_matrix
+import pandas as pd
+import seaborn as sns
+from sklearn.cluster import KMeans
+model = KMeans(
+    n_clusters=3,
+    random_state=42
+)
 
-graph={}
-
-pq=PriorityQueue()
-pq.put((0,start))
-visited=[]
-while not pq.empty():
-    v,c=pq.get()
-    if c not in visited:
-        visited.append(c)
-        for c,n in graph[cur]:
-            pq.put((c,n))
-
+for i in (dir(plt)):
+  if(i.startswith('x')):
+    print(i)
